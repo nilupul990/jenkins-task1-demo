@@ -1,30 +1,29 @@
 pipeline {
   agent any
-  // Poll SCM every 2 minutes (fits brief: no webhook, polling is OK)
-  triggers { pollSCM('H/2 * * * *') }
+  triggers { pollSCM('H/2 * * * *') }  // auto-run via polling (no webhook)
   options { timestamps() }
 
   stages {
     stage('Build') {
-      steps { bat 'echo Task: Compile & package | Tool: Maven' }
+      steps { bat 'echo Task: Compile ^& package ^| Tool: Maven' }
     }
     stage('Unit and Integration Tests') {
-      steps { bat 'echo Task: Run unit & integration tests | Tools: JUnit, TestNG' }
+      steps { bat 'echo Task: Run unit ^& integration tests ^| Tools: JUnit, TestNG' }
     }
     stage('Code Analysis') {
-      steps { bat 'echo Task: Static code analysis | Tool: SonarQube (or Checkstyle/PMD)' }
+      steps { bat 'echo Task: Static code analysis ^| Tool: SonarQube (or Checkstyle/PMD)' }
     }
     stage('Security Scan') {
-      steps { bat 'echo Task: Vulnerability scan | Tool: OWASP Dependency-Check (or Snyk)' }
+      steps { bat 'echo Task: Vulnerability scan ^| Tool: OWASP Dependency-Check (or Snyk)' }
     }
     stage('Deploy to Staging') {
-      steps { bat 'echo Task: Deploy to staging env | Tool: AWS EC2 (or Docker/K8s)' }
+      steps { bat 'echo Task: Deploy to staging env ^| Tool: AWS EC2 (or Docker/K8s)' }
     }
     stage('Integration Tests on Staging') {
-      steps { bat 'echo Task: Integration tests on staging | Tools: Selenium, Postman' }
+      steps { bat 'echo Task: Integration tests on staging ^| Tools: Selenium, Postman' }
     }
     stage('Deploy to Production') {
-      steps { bat 'echo Task: Deploy to prod | Tool: AWS EC2 (or Ansible/K8s)' }
+      steps { bat 'echo Task: Deploy to prod ^| Tool: AWS EC2 (or Ansible/K8s)' }
     }
   }
 }
